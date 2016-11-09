@@ -1,6 +1,0 @@
-D:\AES\WebSites\RegressionToolBackGroundTasks\RegressionToolBackGroundTasks\bin\Debug\RegressionToolBackGroundTasks.dll
-D:\AES\WebSites\RegressionToolBackGroundTasks\RegressionToolBackGroundTasks\bin\Debug\RegressionToolBackGroundTasks.pdb
-D:\AES\WebSites\RegressionToolBackGroundTasks\RegressionToolBackGroundTasks\bin\Debug\nunit.framework.dll
-D:\AES\WebSites\RegressionToolBackGroundTasks\RegressionToolBackGroundTasks\bin\Debug\nunit.framework.xml
-D:\AES\WebSites\RegressionToolBackGroundTasks\RegressionToolBackGroundTasks\obj\Debug\RegressionToolBackGroundTasks.dll
-D:\AES\WebSites\RegressionToolBackGroundTasks\RegressionToolBackGroundTasks\obj\Debug\RegressionToolBackGroundTasks.pdb

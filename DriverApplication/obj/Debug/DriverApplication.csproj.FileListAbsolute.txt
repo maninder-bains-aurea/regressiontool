@@ -1,10 +1,1 @@
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\DriverApplication.exe.config
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\DriverApplication.exe
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\DriverApplication.pdb
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\RegressionToolBackGroundTasks.dll
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\nunit.framework.dll
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\RegressionToolBackGroundTasks.pdb
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\bin\Debug\nunit.framework.xml
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\obj\Debug\DriverApplication.csprojResolveAssemblyReference.cache
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\obj\Debug\DriverApplication.exe
-D:\AES\WebSites\RegressionToolBackGroundTasks\DriverApplication\obj\Debug\DriverApplication.pdb
+D:\AES\RegressionTool\DriverApplication\bin\Debug\DriverApplication.exe.config
