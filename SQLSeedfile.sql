@@ -25,6 +25,8 @@ CREATE TABLE [dbo].[Regression]
 	[UserId] INT NOT NULL, 
     [MapName] NCHAR(200) NULL, 
     [StatusId] INT NULL,
+	[StartDate] Datetime NULL,
+	[EndDate] Datetime NULL,
 	constraint fk_regression_statusid foreign key (StatusId) references RegressionStatus (Id),
 	constraint fk_regression_userid foreign key (userid) references LoginUser (Id)
 )
@@ -35,6 +37,8 @@ CREATE TABLE [dbo].[Regression_ASP_TP]
     [RegressionId] INT NOT NULL, 
     [Asp_tpId] INT NOT NULL, 
     [Asp_tpCode] NCHAR(100) NOT NULL, 
+	[Client] NCHAR(100) NOT NULL,
+	[Utility] NCHAR(100) NOT NULL,	
     [StatusId] INT NOT NULL,
 	constraint fk_regression_asp_tp_statusid foreign key (StatusId) references RegressionStatus (Id),
 	constraint fk_regression_asp_tp_regressionid foreign key (RegressionID) references Regression (Id)
@@ -48,7 +52,9 @@ CREATE TABLE [dbo].[RegressionFiles]
     [PresTranslatedFilename] NCHAR(200) NOT NULL, 
     [PostTranslatedFilename ] NCHAR(200) NOT NULL, 
     [LocalLoationPreTranslatedFile] NCHAR(200) NOT NULL, 
-    [LocalLoationPostTranslatedFile] NCHAR(200) NOT NULL, 
+    [LocalLoationPostTranslatedFile] NCHAR(200) NOT NULL,
+    [TransDate]	DATETIME NOT NULL,
+	[Matching] BIT NULL	,
     [StatusId] INT NOT NULL	,
 	constraint fk_regressionfiles_statusid foreign key (StatusId) references RegressionStatus (Id),
 	constraint fk_regressionfiles_regression_asp_tpid foreign key (Regression_ASP_TPID) references Regression_ASP_TP (Id)
