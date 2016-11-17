@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RegressionToolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LoginUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Regression">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="MapName" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Regression_ASP_TP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RegressionId" Type="int" Nullable="false" />
+          <Property Name="Asp_tpId" Type="int" Nullable="false" />
+          <Property Name="Asp_tpCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Client" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Utility" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Matches" Type="int" />
+          <Property Name="Diff" Type="int" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegressionFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Regression_ASP_TPID" Type="int" Nullable="false" />
+          <Property Name="PresTranslatedFilename" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PostTranslatedFilename " Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LocalLoationPreTranslatedFile" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LocalLoationPostTranslatedFile" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TransDate" Type="datetime" Nullable="false" />
+          <Property Name="Matching" Type="bit" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegressionStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StatusType" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Regression_ASP_TP_Regression">
+          <End Role="Regression" Type="Self.Regression" Multiplicity="1" />
+          <End Role="Regression_ASP_TP" Type="Self.Regression_ASP_TP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regression">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression_ASP_TP">
+              <PropertyRef Name="RegressionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Regression_ASP_TP_RegressionStatus">
+          <End Role="RegressionStatus" Type="Self.RegressionStatus" Multiplicity="1" />
+          <End Role="Regression_ASP_TP" Type="Self.Regression_ASP_TP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegressionStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression_ASP_TP">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regression_statusid">
+          <End Role="RegressionStatus" Type="Self.RegressionStatus" Multiplicity="0..1" />
+          <End Role="Regression" Type="Self.Regression" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegressionStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regression_userid">
+          <End Role="LoginUser" Type="Self.LoginUser" Multiplicity="1" />
+          <End Role="Regression" Type="Self.Regression" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regressionfiles_regression_asp_tpid">
+          <End Role="Regression_ASP_TP" Type="Self.Regression_ASP_TP" Multiplicity="1" />
+          <End Role="RegressionFiles" Type="Self.RegressionFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regression_ASP_TP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegressionFiles">
+              <PropertyRef Name="Regression_ASP_TPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regressionfiles_statusid">
+          <End Role="RegressionStatus" Type="Self.RegressionStatus" Multiplicity="1" />
+          <End Role="RegressionFiles" Type="Self.RegressionFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegressionStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegressionFiles">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RegressionToolModelStoreContainer">
+          <EntitySet Name="LoginUser" EntityType="Self.LoginUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Regression" EntityType="Self.Regression" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Regression_ASP_TP" EntityType="Self.Regression_ASP_TP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegressionFiles" EntityType="Self.RegressionFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegressionStatus" EntityType="Self.RegressionStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Regression_ASP_TP_Regression" Association="Self.FK_Regression_ASP_TP_Regression">
+            <End Role="Regression" EntitySet="Regression" />
+            <End Role="Regression_ASP_TP" EntitySet="Regression_ASP_TP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Regression_ASP_TP_RegressionStatus" Association="Self.FK_Regression_ASP_TP_RegressionStatus">
+            <End Role="RegressionStatus" EntitySet="RegressionStatus" />
+            <End Role="Regression_ASP_TP" EntitySet="Regression_ASP_TP" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regression_statusid" Association="Self.fk_regression_statusid">
+            <End Role="RegressionStatus" EntitySet="RegressionStatus" />
+            <End Role="Regression" EntitySet="Regression" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regression_userid" Association="Self.fk_regression_userid">
+            <End Role="LoginUser" EntitySet="LoginUser" />
+            <End Role="Regression" EntitySet="Regression" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regressionfiles_regression_asp_tpid" Association="Self.fk_regressionfiles_regression_asp_tpid">
+            <End Role="Regression_ASP_TP" EntitySet="Regression_ASP_TP" />
+            <End Role="RegressionFiles" EntitySet="RegressionFiles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regressionfiles_statusid" Association="Self.fk_regressionfiles_statusid">
+            <End Role="RegressionStatus" EntitySet="RegressionStatus" />
+            <End Role="RegressionFiles" EntitySet="RegressionFiles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RegressionToolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RegressionToolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LoginUsers" EntityType="RegressionToolModel.LoginUser" />
+          <EntitySet Name="Regressions" EntityType="RegressionToolModel.Regression" />
+          <EntitySet Name="Regression_ASP_TP" EntityType="RegressionToolModel.Regression_ASP_TP" />
+          <EntitySet Name="RegressionFiles" EntityType="RegressionToolModel.RegressionFile" />
+          <EntitySet Name="RegressionStatus" EntityType="RegressionToolModel.RegressionStatu" />
+          <AssociationSet Name="fk_regression_userid" Association="RegressionToolModel.fk_regression_userid">
+            <End Role="LoginUser" EntitySet="LoginUsers" />
+            <End Role="Regression" EntitySet="Regressions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Regression_ASP_TP_Regression" Association="RegressionToolModel.FK_Regression_ASP_TP_Regression">
+            <End Role="Regression" EntitySet="Regressions" />
+            <End Role="Regression_ASP_TP" EntitySet="Regression_ASP_TP" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regression_statusid" Association="RegressionToolModel.fk_regression_statusid">
+            <End Role="RegressionStatu" EntitySet="RegressionStatus" />
+            <End Role="Regression" EntitySet="Regressions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Regression_ASP_TP_RegressionStatus" Association="RegressionToolModel.FK_Regression_ASP_TP_RegressionStatus">
+            <End Role="RegressionStatu" EntitySet="RegressionStatus" />
+            <End Role="Regression_ASP_TP" EntitySet="Regression_ASP_TP" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regressionfiles_regression_asp_tpid" Association="RegressionToolModel.fk_regressionfiles_regression_asp_tpid">
+            <End Role="Regression_ASP_TP" EntitySet="Regression_ASP_TP" />
+            <End Role="RegressionFile" EntitySet="RegressionFiles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_regressionfiles_statusid" Association="RegressionToolModel.fk_regressionfiles_statusid">
+            <End Role="RegressionStatu" EntitySet="RegressionStatus" />
+            <End Role="RegressionFile" EntitySet="RegressionFiles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LoginUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Regressions" Relationship="RegressionToolModel.fk_regression_userid" FromRole="LoginUser" ToRole="Regression" />
+        </EntityType>
+        <EntityType Name="Regression">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="MapName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LoginUser" Relationship="RegressionToolModel.fk_regression_userid" FromRole="Regression" ToRole="LoginUser" />
+          <NavigationProperty Name="Regression_ASP_TP" Relationship="RegressionToolModel.FK_Regression_ASP_TP_Regression" FromRole="Regression" ToRole="Regression_ASP_TP" />
+          <NavigationProperty Name="RegressionStatu" Relationship="RegressionToolModel.fk_regression_statusid" FromRole="Regression" ToRole="RegressionStatu" />
+        </EntityType>
+        <EntityType Name="Regression_ASP_TP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RegressionId" Type="Int32" Nullable="false" />
+          <Property Name="Asp_tpId" Type="Int32" Nullable="false" />
+          <Property Name="Asp_tpCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Client" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Utility" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Matches" Type="Int32" />
+          <Property Name="Diff" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Regression" Relationship="RegressionToolModel.FK_Regression_ASP_TP_Regression" FromRole="Regression_ASP_TP" ToRole="Regression" />
+          <NavigationProperty Name="RegressionStatu" Relationship="RegressionToolModel.FK_Regression_ASP_TP_RegressionStatus" FromRole="Regression_ASP_TP" ToRole="RegressionStatu" />
+          <NavigationProperty Name="RegressionFiles" Relationship="RegressionToolModel.fk_regressionfiles_regression_asp_tpid" FromRole="Regression_ASP_TP" ToRole="RegressionFile" />
+        </EntityType>
+        <EntityType Name="RegressionFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Regression_ASP_TPID" Type="Int32" Nullable="false" />
+          <Property Name="PresTranslatedFilename" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PostTranslatedFilename_" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LocalLoationPreTranslatedFile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LocalLoationPostTranslatedFile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Matching" Type="Boolean" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Regression_ASP_TP" Relationship="RegressionToolModel.fk_regressionfiles_regression_asp_tpid" FromRole="RegressionFile" ToRole="Regression_ASP_TP" />
+          <NavigationProperty Name="RegressionStatu" Relationship="RegressionToolModel.fk_regressionfiles_statusid" FromRole="RegressionFile" ToRole="RegressionStatu" />
+        </EntityType>
+        <EntityType Name="RegressionStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StatusType" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Regressions" Relationship="RegressionToolModel.fk_regression_statusid" FromRole="RegressionStatu" ToRole="Regression" />
+          <NavigationProperty Name="Regression_ASP_TP" Relationship="RegressionToolModel.FK_Regression_ASP_TP_RegressionStatus" FromRole="RegressionStatu" ToRole="Regression_ASP_TP" />
+          <NavigationProperty Name="RegressionFiles" Relationship="RegressionToolModel.fk_regressionfiles_statusid" FromRole="RegressionStatu" ToRole="RegressionFile" />
+        </EntityType>
+        <Association Name="fk_regression_userid">
+          <End Type="RegressionToolModel.LoginUser" Role="LoginUser" Multiplicity="1" />
+          <End Type="RegressionToolModel.Regression" Role="Regression" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Regression_ASP_TP_Regression">
+          <End Type="RegressionToolModel.Regression" Role="Regression" Multiplicity="1" />
+          <End Type="RegressionToolModel.Regression_ASP_TP" Role="Regression_ASP_TP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regression">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression_ASP_TP">
+              <PropertyRef Name="RegressionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regression_statusid">
+          <End Type="RegressionToolModel.RegressionStatu" Role="RegressionStatu" Multiplicity="0..1" />
+          <End Type="RegressionToolModel.Regression" Role="Regression" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegressionStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Regression_ASP_TP_RegressionStatus">
+          <End Type="RegressionToolModel.RegressionStatu" Role="RegressionStatu" Multiplicity="1" />
+          <End Type="RegressionToolModel.Regression_ASP_TP" Role="Regression_ASP_TP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegressionStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Regression_ASP_TP">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regressionfiles_regression_asp_tpid">
+          <End Type="RegressionToolModel.Regression_ASP_TP" Role="Regression_ASP_TP" Multiplicity="1" />
+          <End Type="RegressionToolModel.RegressionFile" Role="RegressionFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regression_ASP_TP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegressionFile">
+              <PropertyRef Name="Regression_ASP_TPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_regressionfiles_statusid">
+          <End Type="RegressionToolModel.RegressionStatu" Role="RegressionStatu" Multiplicity="1" />
+          <End Type="RegressionToolModel.RegressionFile" Role="RegressionFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegressionStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegressionFile">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RegressionToolModelStoreContainer" CdmEntityContainer="RegressionToolEntities">
+          <EntitySetMapping Name="LoginUsers">
+            <EntityTypeMapping TypeName="RegressionToolModel.LoginUser">
+              <MappingFragment StoreEntitySet="LoginUser">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regressions">
+            <EntityTypeMapping TypeName="RegressionToolModel.Regression">
+              <MappingFragment StoreEntitySet="Regression">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="MapName" ColumnName="MapName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regression_ASP_TP">
+            <EntityTypeMapping TypeName="RegressionToolModel.Regression_ASP_TP">
+              <MappingFragment StoreEntitySet="Regression_ASP_TP">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Diff" ColumnName="Diff" />
+                <ScalarProperty Name="Matches" ColumnName="Matches" />
+                <ScalarProperty Name="Utility" ColumnName="Utility" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="Asp_tpCode" ColumnName="Asp_tpCode" />
+                <ScalarProperty Name="Asp_tpId" ColumnName="Asp_tpId" />
+                <ScalarProperty Name="RegressionId" ColumnName="RegressionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegressionFiles">
+            <EntityTypeMapping TypeName="RegressionToolModel.RegressionFile">
+              <MappingFragment StoreEntitySet="RegressionFiles">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Matching" ColumnName="Matching" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="LocalLoationPostTranslatedFile" ColumnName="LocalLoationPostTranslatedFile" />
+                <ScalarProperty Name="LocalLoationPreTranslatedFile" ColumnName="LocalLoationPreTranslatedFile" />
+                <ScalarProperty Name="PostTranslatedFilename_" ColumnName="PostTranslatedFilename " />
+                <ScalarProperty Name="PresTranslatedFilename" ColumnName="PresTranslatedFilename" />
+                <ScalarProperty Name="Regression_ASP_TPID" ColumnName="Regression_ASP_TPID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegressionStatus">
+            <EntityTypeMapping TypeName="RegressionToolModel.RegressionStatu">
+              <MappingFragment StoreEntitySet="RegressionStatus">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,10 @@
+Please make following changes to the project before running - 
+
+Modify connectionstring in RegressionUI/Web.config & RegressionDAL/App.config
+
+PageSize is defined in RegressionUI/Web.config
+
+DB changes -  
+
+changed nchar datatype to nvarchar
+set identity on for id column in regression table

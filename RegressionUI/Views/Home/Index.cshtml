@@ -1,0 +1,48 @@
+﻿@model RegressionUI.Models.LoginModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/common.js"></script>
+
+@Html.ValidationSummary(true)
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                    Add New Map
+                </a>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group form-inline col-lg-12 text-center">
+                    @Html.Label("Enter Map Name : ")
+                    @Html.TextBox("MapName", "", new { @class = "form-control", @data_rule_required = "true" })
+                    <button type="button" class="btn btn-primary" id="btnGo">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" id="viewList">
+                    View Existing Maps
+                </a>
+            </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table id="divParent" class="table table-bordered table-condensed table-hover table-striped"></table>
+                <div id="loader" style="height: 100%; width: 100%; background-color: transparent; position: absolute; z-index: 100; top: 0px; left: 0px">
+                    <div class="loader" style="position: absolute; top: 45%; left:45%; z-index: 100;"></div>
+                </div>
+                <ul class="pagination" id="pager"></ul>
+            </div>
+        </div>
+    </div>
+</div>
